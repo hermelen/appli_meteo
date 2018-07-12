@@ -12,11 +12,12 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
 $(document).ready(function() {
 
 	$.ajax({
-		url: 'https://public.opendatasoft.com/api/records/1.0/search/?dataset=contours-simplifies-des-departements-francais-2015&facet=code_dept',
+		url: 'https://public.opendatasoft.com/api/records/1.0/search/?dataset=contours-simplifies-des-departements-francais-2015&rows=150&facet=code_dept',
 		// type: 'GET',
 		datatype: 'json',
 		success: function(data, statut) {
-			displayCities(data) 
+			displayCities(data);
+            weather(displayCities(data));
 		},
 		error: function(resultat, statut, erreur) {
 
@@ -29,10 +30,29 @@ $(document).ready(function() {
 	function displayCities(data) {
 		for (dept of data['records']) {
 			var shape = dept['fields']['geo_shape'];
-			L.geoJSON(shape).addTo(mymap);
+            var name = dept['fields']['nom_chf'];
+            var geoPoint = dept['fields']['geo_point_2d'];
+            L.geoJSON(shape).addTo(mymap);
+            return name;
 		}
 	}
 
+    function weather(city) {
+        $.ajax({
+            url: "api.openweathermap.org/data/2.5/weather?q=" + city + ",fr&APPID=9320a50df4522e7606195b5c99b563a6",
+            datatype: 'json',
+            success: function(data, statut) {
+    		    var marker = L.marker(['data']['coord']["lat"],['data']['coord']["lon"]).addTo(mymap);
+                console.log(marker);
+    		},
+    		error: function(resultat, statut, erreur) {
+
+    		},
+    		complete: function(resultat, statut) {
+
+    		}
+        })
+    }
 	// var marker = L.marker([51.5, -0.09]).addTo(mymap);
 
 })
