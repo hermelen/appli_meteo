@@ -48,9 +48,7 @@ $(document).ready(function() {
 						// popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 					});
 					var popUpData = data['name'] + ", " + img;
-					L.marker([data['coord']["lat"], data['coord']["lon"]], {
-						icon: thisIcon
-					}).bindPopup(popUpData).openPopup().addTo(mymap);
+					L.marker([data['coord']["lat"], data['coord']["lon"]], { icon: thisIcon	}).bindPopup(popUpData).openPopup().addTo(mymap);
 
 				},
 				error: function(resultat, statut, erreur) {},
