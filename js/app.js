@@ -41,14 +41,14 @@ $(document).ready(function() {
 						iconUrl: imgUrl,
 						// shadowUrl: 'leaf-shadow.png',
 
-						iconSize: [38, 38], // size of the icon
+						iconSize: [60, 60], // size of the icon
 						// shadowSize: [50, 64], // size of the shadow
 						iconAnchor: [19, 19], // point of the icon which will correspond to marker's location
 						// shadowAnchor: [4, 62], // the same for the shadow
 						// popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 					});
 					var cel = Math.round(data['main']["temp"] - 273.15);
-					var popUpData = data['name'] + ", " + img + cel;
+					var popUpData = data['name'] + ", " + img + cel +" C°";
 					L.marker([data['coord']["lat"], data['coord']["lon"]], {
 						icon: thisIcon
 					}).bindPopup(popUpData).openPopup().addTo(mymap);
